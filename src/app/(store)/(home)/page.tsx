@@ -1,14 +1,23 @@
 import { api } from '@/data/api'
 import { Product } from '@/data/types/products'
+import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 
 async function getFeaturedProducts(): Promise<Product[]> {
-  const response = await api('/products/featured')
+  const response = await api('/products/featured', {
+    next: {
+      revalidate: 60 * 60, // 1 hour
+    },
+  })
 
   const products = await response.json()
 
   return products
+}
+
+export const metadata: Metadata = {
+  title: 'Home',
 }
 
 export default async function Home() {
@@ -22,10 +31,10 @@ export default async function Home() {
       >
         <Image
           src={highlightedProduct.image}
-          width={920}
-          height={920}
-          quality={100}
           className="group-hover:scale-105 transition-transform duration-500"
+          width={860}
+          height={860}
+          quality={100}
           alt=""
         />
 
@@ -51,10 +60,10 @@ export default async function Home() {
           >
             <Image
               src={product.image}
+              className="group-hover:scale-105 transition-transform duration-500"
               width={420}
               height={420}
               quality={100}
-              className="group-hover:scale-105 transition-transform duration-500"
               alt=""
             />
 
