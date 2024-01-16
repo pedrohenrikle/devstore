@@ -9,6 +9,8 @@ interface ProductProps {
   }
 }
 
+// Função que busca o produto específico na api
+
 async function getProduct(slug: string): Promise<Product> {
   const response = await api(`/products/${slug}`, {
     next: {
@@ -21,6 +23,8 @@ async function getProduct(slug: string): Promise<Product> {
   return products
 }
 
+// Geração de metadata, botando o nome do produto no title
+
 export async function generateMetadata({
   params,
 }: ProductProps): Promise<Metadata> {
@@ -29,6 +33,17 @@ export async function generateMetadata({
   return {
     title: product.title,
   }
+}
+
+// Geração estática para as páginas dos produtos mais acessados
+
+export async function generateStaticParams() {
+  const response = await api('/products/featured')
+  const products: Product[] = await response.json()
+
+  return products.map((product) => {
+    return { slug: product.slug }
+  })
 }
 
 export default async function ProductPage({ params }: ProductProps) {
