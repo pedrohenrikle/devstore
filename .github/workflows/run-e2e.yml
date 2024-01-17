@@ -1,4 +1,4 @@
-name: Cypress Tests 1
+name: Cypress Tests 3
 
 on: push
 
@@ -32,8 +32,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - uses: actions/cache@v3
-        name: Setup Cypress cache
+      - name: Install Cypress
+        run: |
+          npx cypress install
+
+      - name: Setup Cypress cache
+        if: success()
+        uses: actions/cache@v3
         with:
           path: ~/.cache
           key: ${{ runner.os }}-cypress-installation-${{ hashFiles('**/pnpm-lock.yaml') }}
@@ -42,11 +47,12 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
+
       - name: Cypress run
         uses: cypress-io/github-action@v6
         env: 
           APP_URL: "http://localhost:3000"
-          NEXT_PUBLIC_API_BASE_URL: "https://devstore-api-mocha.vercel.app"
+          NEXT_PUBLIC_API_BASE_URL: "https://devstore-api-lovat.vercel.app"
         with:
-          build: npm run build
-          start: npm start
+          build: pnpm run build
+          start: pnpm start
