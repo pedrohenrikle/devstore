@@ -1,7 +1,7 @@
 describe('add-product-to-cart', () => {
   it('should be able to search for products', () => {
-    cy.searchByQuery('sweatshirt')
-    cy.location('search').should('include', 'q=sweatshirt')
+    cy.searchByQuery('moletom')
+    cy.location('search').should('include', 'q=moletom')
 
     cy.get('a[href^="/product"]').should('exist')
   })
