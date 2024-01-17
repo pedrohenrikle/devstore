@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Cypress Tests 1
 
 on: push
 
@@ -14,14 +14,14 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install PNPM
+      - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
           run_install: false
 
       - name: Get pnpm store directory
-        shell: bash
+        id: store-path
         run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
       - uses: actions/cache@v3
