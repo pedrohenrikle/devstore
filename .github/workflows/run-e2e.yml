@@ -49,5 +49,6 @@ jobs:
           APP_URL: "http://localhost:3000"
           NEXT_PUBLIC_API_BASE_URL: "https://devstore-api-mocha.vercel.app"
         with:
+          install: pnpm cypress install
           build: pnpm run build
           start: pnpm start
