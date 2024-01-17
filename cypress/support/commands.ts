@@ -6,7 +6,6 @@ declare namespace Cypress {
   }
 }
 
-// -- This is a parent command --
 Cypress.Commands.add('searchByQuery', (query: string) => {
   cy.visit('/')
 
